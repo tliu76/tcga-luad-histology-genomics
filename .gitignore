@@ -1,0 +1,26 @@
+# Data and derived artifacts
+data/raw/
+data/interim/
+data/processed/
+data/*.svs
+data/*.tif
+data/*.tiff
+data/*.h5
+data/*.pt
+artifacts/
+reports/
+
+# Python and notebooks
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+
+# OS/editor files
+.DS_Store
+.vscode/
+
+# Secrets and access tokens
+.env
+*.pem

@@ -1,0 +1,14 @@
+project: TCGA-LUAD
+primary_site: Lung
+data_type: Slide Image
+sample_type: Primary Tumor
+target:
+  name: EGFR_mutation
+  definition: "Nonsynonymous somatic EGFR mutation from a harmonized public MAF file."
+development_cohort:
+  max_cases: 120
+  random_seed: 76
+notes:
+  - "Use one diagnostic H&E slide per patient for the first milestone."
+  - "Split train, validation, and test sets by patient before extracting patches."
+  - "Review pathology and sequencing metadata before modeling."
