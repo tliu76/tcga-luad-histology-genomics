@@ -65,7 +65,7 @@ def fig_performance(m):
             ax.plot([i - 1.5 * w, i + 1.5 * w], [PAPER[t]] * 2, color=C["d"], lw=1.4, ls="--")
     ax.plot([], [], color=C["d"], ls="--", label="Paladin (paper, MSK n≈880)")
     ax.axhline(0.5, color=C["muted"], lw=0.6, ls=":")
-    ax.set_xticks(x, [t.replace("LUAD_", "").replace("NSCLC_subtype_LUSC", "LUAD vs LUSC").replace("_pathway", " pathway") for t in tasks])
+    ax.set_xticks(x, [t.replace("LUAD_", "").replace("NSCLC_subtype_LUSC", "LUAD/LUSC").replace("_pathway", "") for t in tasks])
     ax.set_ylim(0.4, 1.02)
     ax.set_ylabel("Patient-level AUROC (5-fold OOF)")
     ax.legend(frameon=False, ncol=2, fontsize=7.5, loc="upper left")
@@ -91,22 +91,23 @@ def fig_coarse(m):
     ax.axvline(0.5, color=C["muted"], lw=0.6, ls=":")
     ax.set_xlabel("TP53 AUROC")
     ax.set_title("Coarse vs granular subtype", loc="left", fontsize=10)
-    # what the coarse model learned: TP53 prob vs subtype prob
+    # what the coarse model learned: compare with a subtype-only predictor
     ax = axes[1]
     if (RES / "pred_NSCLC_subtype_LUSC_random.csv").exists():
+        from sklearn.metrics import roc_auc_score
         a, b = pred("NSCLC_TP53"), pred("NSCLC_subtype_LUSC")
         j = a.join(b[["prob_abmil"]], rsuffix="_lusc").dropna(subset=["label"])
-        lab = labels()
-        coh = lab.loc[j.index, "cohort"]
-        for c, col in [("LUAD", C["a"]), ("LUSC", C["c"])]:
-            s = j[coh == c]
-            ax.scatter(s.prob_abmil_lusc, s.prob_abmil, s=5, alpha=0.5, color=col, label=c, lw=0)
-        rho = spearmanr(j.prob_abmil_lusc, j.prob_abmil).statistic
-        ax.set_xlabel("P(LUSC) from subtype model")
-        ax.set_ylabel("P(TP53 mut) from pooled model")
-        ax.set_title(f"Pooled TP53 score tracks subtype (ρ={rho:.2f})", loc="left", fontsize=9)
-        ax.legend(frameon=False, markerscale=2)
-        SUMMARY["coarse_rho_tp53_vs_subtype"] = float(rho)
+        vals = [roc_auc_score(j.label, j.prob_abmil), roc_auc_score(j.label, j.prob_abmil_lusc)]
+        ax.barh([0, 1], vals, color=[C["d"], C["muted"]], height=0.55)
+        for i, v in enumerate(vals):
+            ax.text(v + 0.01, i, f"{v:.2f}", va="center", fontsize=8.5)
+        ax.set_yticks([0, 1], ["Pooled H&E model\n(TP53 target)", "Subtype score only\n(P(LUSC), no TP53 info)"])
+        ax.invert_yaxis()
+        ax.set_xlim(0.4, 1)
+        ax.axvline(0.5, color=C["muted"], lw=0.6, ls=":")
+        ax.set_xlabel("TP53 AUROC in pooled NSCLC")
+        ax.set_title("Pooled signal ≈ subtype signal", loc="left", fontsize=10)
+        SUMMARY["coarse_subtype_only_auroc"] = float(vals[1])
     fig.tight_layout()
     fig.savefig(FIG / "fig_coarse_vs_granular.png")
     plt.close(fig)

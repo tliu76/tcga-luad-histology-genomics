@@ -1,0 +1,868 @@
+{
+  "metrics": [
+    {
+      "task": "LUAD_EGFR",
+      "cohort": "LUAD",
+      "target": "EGFR",
+      "scheme": "random",
+      "n": 153,
+      "n_pos": 13,
+      "auroc_abmil": 0.609,
+      "auroc_abmil_lo": 0.456,
+      "auroc_abmil_hi": 0.746,
+      "auprc_abmil": 0.12,
+      "auroc_linear": 0.541,
+      "auroc_linear_lo": 0.377,
+      "auroc_linear_hi": 0.677,
+      "auprc_linear": 0.106
+    },
+    {
+      "task": "LUAD_KRAS",
+      "cohort": "LUAD",
+      "target": "KRAS",
+      "scheme": "random",
+      "n": 153,
+      "n_pos": 47,
+      "auroc_abmil": 0.574,
+      "auroc_abmil_lo": 0.479,
+      "auroc_abmil_hi": 0.675,
+      "auprc_abmil": 0.416,
+      "auroc_linear": 0.592,
+      "auroc_linear_lo": 0.501,
+      "auroc_linear_hi": 0.686,
+      "auprc_linear": 0.435
+    },
+    {
+      "task": "LUAD_TP53",
+      "cohort": "LUAD",
+      "target": "TP53",
+      "scheme": "random",
+      "n": 153,
+      "n_pos": 84,
+      "auroc_abmil": 0.69,
+      "auroc_abmil_lo": 0.6,
+      "auroc_abmil_hi": 0.775,
+      "auprc_abmil": 0.728,
+      "auroc_linear": 0.631,
+      "auroc_linear_lo": 0.54,
+      "auroc_linear_hi": 0.72,
+      "auprc_linear": 0.659
+    },
+    {
+      "task": "LUAD_STK11",
+      "cohort": "LUAD",
+      "target": "STK11",
+      "scheme": "random",
+      "n": 147,
+      "n_pos": 14,
+      "auroc_abmil": 0.653,
+      "auroc_abmil_lo": 0.459,
+      "auroc_abmil_hi": 0.826,
+      "auprc_abmil": 0.197,
+      "auroc_linear": 0.657,
+      "auroc_linear_lo": 0.456,
+      "auroc_linear_hi": 0.822,
+      "auprc_linear": 0.202
+    },
+    {
+      "task": "LUAD_NRF2_pathway",
+      "cohort": "LUAD",
+      "target": "NRF2_pathway",
+      "scheme": "random",
+      "n": 153,
+      "n_pos": 34,
+      "auroc_abmil": 0.447,
+      "auroc_abmil_lo": 0.348,
+      "auroc_abmil_hi": 0.56,
+      "auprc_abmil": 0.204,
+      "auroc_linear": 0.428,
+      "auroc_linear_lo": 0.318,
+      "auroc_linear_hi": 0.539,
+      "auprc_linear": 0.205
+    },
+    {
+      "task": "LUSC_TP53",
+      "cohort": "LUSC",
+      "target": "TP53",
+      "scheme": "random",
+      "n": 128,
+      "n_pos": 101,
+      "auroc_abmil": 0.449,
+      "auroc_abmil_lo": 0.331,
+      "auroc_abmil_hi": 0.563,
+      "auprc_abmil": 0.773,
+      "auroc_linear": 0.484,
+      "auroc_linear_lo": 0.375,
+      "auroc_linear_hi": 0.592,
+      "auprc_linear": 0.816
+    },
+    {
+      "task": "NSCLC_TP53",
+      "cohort": "NSCLC",
+      "target": "TP53",
+      "scheme": "random",
+      "n": 281,
+      "n_pos": 185,
+      "auroc_abmil": 0.663,
+      "auroc_abmil_lo": 0.599,
+      "auroc_abmil_hi": 0.727,
+      "auprc_abmil": 0.762,
+      "auroc_linear": 0.667,
+      "auroc_linear_lo": 0.596,
+      "auroc_linear_hi": 0.727,
+      "auprc_linear": 0.787
+    },
+    {
+      "task": "NSCLC_NRF2_pathway",
+      "cohort": "NSCLC",
+      "target": "NRF2_pathway",
+      "scheme": "random",
+      "n": 281,
+      "n_pos": 69,
+      "auroc_abmil": 0.581,
+      "auroc_abmil_lo": 0.496,
+      "auroc_abmil_hi": 0.657,
+      "auprc_abmil": 0.319,
+      "auroc_linear": 0.568,
+      "auroc_linear_lo": 0.49,
+      "auroc_linear_hi": 0.643,
+      "auprc_linear": 0.295
+    },
+    {
+      "task": "NSCLC_subtype_LUSC",
+      "cohort": "NSCLC",
+      "target": "is_LUSC",
+      "scheme": "random",
+      "n": 281,
+      "n_pos": 128,
+      "auroc_abmil": 0.974,
+      "auroc_abmil_lo": 0.959,
+      "auroc_abmil_hi": 0.987,
+      "auprc_abmil": 0.973,
+      "auroc_linear": 0.95,
+      "auroc_linear_lo": 0.925,
+      "auroc_linear_hi": 0.972,
+      "auprc_linear": 0.945
+    },
+    {
+      "task": "LUAD_EGFR",
+      "cohort": "LUAD",
+      "target": "EGFR",
+      "scheme": "site",
+      "n": 153,
+      "n_pos": 13,
+      "auroc_abmil": 0.766,
+      "auroc_abmil_lo": 0.638,
+      "auroc_abmil_hi": 0.879,
+      "auprc_abmil": 0.253,
+      "auroc_linear": 0.737,
+      "auroc_linear_lo": 0.579,
+      "auroc_linear_hi": 0.865,
+      "auprc_linear": 0.241
+    },
+    {
+      "task": "LUAD_KRAS",
+      "cohort": "LUAD",
+      "target": "KRAS",
+      "scheme": "site",
+      "n": 153,
+      "n_pos": 47,
+      "auroc_abmil": 0.443,
+      "auroc_abmil_lo": 0.343,
+      "auroc_abmil_hi": 0.544,
+      "auprc_abmil": 0.358,
+      "auroc_linear": 0.507,
+      "auroc_linear_lo": 0.405,
+      "auroc_linear_hi": 0.613,
+      "auprc_linear": 0.347
+    },
+    {
+      "task": "LUAD_TP53",
+      "cohort": "LUAD",
+      "target": "TP53",
+      "scheme": "site",
+      "n": 153,
+      "n_pos": 84,
+      "auroc_abmil": 0.667,
+      "auroc_abmil_lo": 0.576,
+      "auroc_abmil_hi": 0.747,
+      "auprc_abmil": 0.678,
+      "auroc_linear": 0.601,
+      "auroc_linear_lo": 0.503,
+      "auroc_linear_hi": 0.694,
+      "auprc_linear": 0.624
+    },
+    {
+      "task": "LUAD_STK11",
+      "cohort": "LUAD",
+      "target": "STK11",
+      "scheme": "site",
+      "n": 147,
+      "n_pos": 14,
+      "auroc_abmil": 0.649,
+      "auroc_abmil_lo": 0.456,
+      "auroc_abmil_hi": 0.817,
+      "auprc_abmil": 0.236,
+      "auroc_linear": 0.611,
+      "auroc_linear_lo": 0.405,
+      "auroc_linear_hi": 0.802,
+      "auprc_linear": 0.237
+    },
+    {
+      "task": "LUAD_NRF2_pathway",
+      "cohort": "LUAD",
+      "target": "NRF2_pathway",
+      "scheme": "site",
+      "n": 153,
+      "n_pos": 34,
+      "auroc_abmil": 0.43,
+      "auroc_abmil_lo": 0.321,
+      "auroc_abmil_hi": 0.536,
+      "auprc_abmil": 0.194,
+      "auroc_linear": 0.429,
+      "auroc_linear_lo": 0.324,
+      "auroc_linear_hi": 0.54,
+      "auprc_linear": 0.196
+    },
+    {
+      "task": "LUSC_TP53",
+      "cohort": "LUSC",
+      "target": "TP53",
+      "scheme": "site",
+      "n": 128,
+      "n_pos": 101,
+      "auroc_abmil": 0.431,
+      "auroc_abmil_lo": 0.312,
+      "auroc_abmil_hi": 0.544,
+      "auprc_abmil": 0.78,
+      "auroc_linear": 0.489,
+      "auroc_linear_lo": 0.357,
+      "auroc_linear_hi": 0.609,
+      "auprc_linear": 0.791
+    },
+    {
+      "task": "NSCLC_TP53",
+      "cohort": "NSCLC",
+      "target": "TP53",
+      "scheme": "site",
+      "n": 281,
+      "n_pos": 185,
+      "auroc_abmil": 0.658,
+      "auroc_abmil_lo": 0.588,
+      "auroc_abmil_hi": 0.722,
+      "auprc_abmil": 0.77,
+      "auroc_linear": 0.617,
+      "auroc_linear_lo": 0.54,
+      "auroc_linear_hi": 0.683,
+      "auprc_linear": 0.739
+    },
+    {
+      "task": "NSCLC_NRF2_pathway",
+      "cohort": "NSCLC",
+      "target": "NRF2_pathway",
+      "scheme": "site",
+      "n": 281,
+      "n_pos": 69,
+      "auroc_abmil": 0.575,
+      "auroc_abmil_lo": 0.501,
+      "auroc_abmil_hi": 0.649,
+      "auprc_abmil": 0.292,
+      "auroc_linear": 0.538,
+      "auroc_linear_lo": 0.464,
+      "auroc_linear_hi": 0.611,
+      "auprc_linear": 0.258
+    },
+    {
+      "task": "NSCLC_subtype_LUSC",
+      "cohort": "NSCLC",
+      "target": "is_LUSC",
+      "scheme": "site",
+      "n": 281,
+      "n_pos": 128,
+      "auroc_abmil": 0.749,
+      "auroc_abmil_lo": 0.697,
+      "auroc_abmil_hi": 0.805,
+      "auprc_abmil": 0.663,
+      "auroc_linear": 0.652,
+      "auroc_linear_lo": 0.591,
+      "auroc_linear_hi": 0.715,
+      "auprc_linear": 0.632
+    }
+  ],
+  "coarse_subtype_only_auroc": 0.6498310810810811,
+  "coarse": {
+    "NSCLC_TP53": {
+      "n": 281,
+      "n_pos": 185,
+      "auroc_abmil": 0.663,
+      "auroc_abmil_lo": 0.599,
+      "auroc_abmil_hi": 0.727
+    },
+    "LUAD_TP53": {
+      "n": 153,
+      "n_pos": 84,
+      "auroc_abmil": 0.69,
+      "auroc_abmil_lo": 0.6,
+      "auroc_abmil_hi": 0.775
+    },
+    "LUSC_TP53": {
+      "n": 128,
+      "n_pos": 101,
+      "auroc_abmil": 0.449,
+      "auroc_abmil_lo": 0.331,
+      "auroc_abmil_hi": 0.563
+    }
+  },
+  "stk11": {
+    "threshold": 0.0054427164141088,
+    "n_wt_high": 68,
+    "n_wt_low": 65,
+    "p_mrna_wt_high_lt_low": 0.10205731246844463,
+    "p_rppa_wt_high_lt_low": 0.3244209724396939,
+    "p_vus_gt_wt": 0.19522947795073417,
+    "median_mrna": {
+      "wt_low": 9.81397193495133,
+      "wt_high": 9.778730959289325,
+      "onc": 8.744087950664952
+    },
+    "keap1_or_smarca4_in_wt_high": 0.25,
+    "keap1_or_smarca4_in_wt_low": 0.12307692307692308,
+    "top_vus": [
+      {
+        "patient": "TCGA-55-8203",
+        "STK11_missense": "G56W",
+        "prob_abmil": 0.233,
+        "mRNA_STK11": 9.838,
+        "RPPA_LKB1": NaN
+      },
+      {
+        "patient": "TCGA-75-7031",
+        "STK11_missense": "W239C",
+        "prob_abmil": 0.186,
+        "mRNA_STK11": 9.152,
+        "RPPA_LKB1": 0.316
+      },
+      {
+        "patient": "TCGA-86-8281",
+        "STK11_missense": "X155_splice",
+        "prob_abmil": 0.008,
+        "mRNA_STK11": 8.753,
+        "RPPA_LKB1": 0.065
+      },
+      {
+        "patient": "TCGA-05-4395",
+        "STK11_missense": "G56W",
+        "prob_abmil": 0.005,
+        "mRNA_STK11": 9.953,
+        "RPPA_LKB1": NaN
+      },
+      {
+        "patient": "TCGA-75-5146",
+        "STK11_missense": "W239C",
+        "prob_abmil": 0.004,
+        "mRNA_STK11": 8.924,
+        "RPPA_LKB1": NaN
+      },
+      {
+        "patient": "TCGA-99-8032",
+        "STK11_missense": "M136I;M136K",
+        "prob_abmil": 0.003,
+        "mRNA_STK11": 9.541,
+        "RPPA_LKB1": NaN
+      }
+    ]
+  },
+  "nrf2": {
+    "rho_all": 0.012389883994844217,
+    "p_all": 0.8803852746587635,
+    "rho_wt": 0.053250504895569706,
+    "p_wt": 0.5668495936402226,
+    "p_keap1_missense_gt_wt": 1.2410669140980444e-10
+  },
+  "survival": {
+    "logrank_p": 0.3963138502545367,
+    "cox_hr_per_sd": 0.9589923824816428,
+    "cox_hr_lo": 0.6626662522557735,
+    "cox_hr_hi": 1.387827411652839,
+    "cox_p": 0.824284160157292
+  },
+  "clusters": {
+    "n_clusters": 7,
+    "n_sig_q05": 0,
+    "top": [
+      {
+        "gene": "STK11",
+        "cluster": 2,
+        "n_cluster": 25,
+        "frac_in": 0.24,
+        "frac_out": 0.0656,
+        "odds_ratio": 4.5,
+        "p": 0.0156,
+        "q": 0.4324
+      },
+      {
+        "gene": "NRF2_pathway",
+        "cluster": 4,
+        "n_cluster": 35,
+        "frac_in": 0.0857,
+        "frac_out": 0.2627,
+        "odds_ratio": 0.2631,
+        "p": 0.0355,
+        "q": 0.4324
+      },
+      {
+        "gene": "KRAS",
+        "cluster": 4,
+        "n_cluster": 35,
+        "frac_in": 0.4571,
+        "frac_out": 0.2627,
+        "odds_ratio": 2.3633,
+        "p": 0.0371,
+        "q": 0.4324
+      },
+      {
+        "gene": "EGFR",
+        "cluster": 5,
+        "n_cluster": 14,
+        "frac_in": 0.2143,
+        "frac_out": 0.0719,
+        "odds_ratio": 3.5182,
+        "p": 0.1007,
+        "q": 0.7525
+      },
+      {
+        "gene": "EGFR",
+        "cluster": 0,
+        "n_cluster": 42,
+        "frac_in": 0.0238,
+        "frac_out": 0.1081,
+        "odds_ratio": 0.2012,
+        "p": 0.1149,
+        "q": 0.7525
+      },
+      {
+        "gene": "NRF2_pathway",
+        "cluster": 0,
+        "n_cluster": 42,
+        "frac_in": 0.3095,
+        "frac_out": 0.1892,
+        "odds_ratio": 1.9212,
+        "p": 0.129,
+        "q": 0.7525
+      }
+    ]
+  },
+  "functional": {
+    "STK11": {
+      "n_patients": 150,
+      "n_dna_labelled": 144,
+      "n_pos": 12,
+      "dna": {
+        "auroc_dna_label": 0.6458333333333333,
+        "rho_heldout_rna_program": 0.305195064985384,
+        "rho_lkb1_protein": 0.13327548442049172,
+        "rho_lkb1_protein_in_WT": 0.08846443834861176,
+        "vus_auc_vs_wt": 0.5795454545454546,
+        "cox": {
+          "hr_per_sd": 1.2909323722180777,
+          "lo": 0.9124247023088025,
+          "hi": 1.8264590879923135,
+          "p": 0.14921228502692865
+        }
+      },
+      "func": {
+        "auroc_dna_label": 0.7174873737373737,
+        "rho_heldout_rna_program": 0.4712920681147575,
+        "rho_lkb1_protein": 0.07892397111291335,
+        "rho_lkb1_protein_in_WT": 0.053348778000574304,
+        "vus_auc_vs_wt": 0.63510101010101,
+        "cox": {
+          "hr_per_sd": 1.0958236703002242,
+          "lo": 0.7909209385231166,
+          "hi": 1.518267449882612,
+          "p": 0.5822897617964464
+        }
+      },
+      "diff_auroc_ci": [
+        -0.09469894843962011,
+        0.25003051757812494,
+        0.1985
+      ],
+      "diff_rho_rna_ci": [
+        0.022940146437908093,
+        0.30315748055864794,
+        0.0135
+      ],
+      "diff_rho_protein_ci": [
+        -0.08353643853085323,
+        0.1925019980264421,
+        0.214
+      ],
+      "learning_curve": [
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.5025252525252525,
+          "rho_heldout_rna": 0.013079692430774701
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.49368686868686873,
+          "rho_heldout_rna": 0.28449442197430996
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.533459595959596,
+          "rho_heldout_rna": 0.1328467931908085
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.5953282828282829,
+          "rho_heldout_rna": 0.2600133339259523
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.7601010101010102,
+          "rho_heldout_rna": 0.11007244766434066
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.25,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.7424242424242424,
+          "rho_heldout_rna": 0.2009813769500867
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 59,
+          "auroc_dna_label": 0.6786616161616161,
+          "rho_heldout_rna": 0.21425841148495486
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 59,
+          "auroc_dna_label": 0.7272727272727273,
+          "rho_heldout_rna": 0.44487132761456066
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 59,
+          "auroc_dna_label": 0.6212121212121212,
+          "rho_heldout_rna": 0.24681808080359127
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 59,
+          "auroc_dna_label": 0.6363636363636364,
+          "rho_heldout_rna": 0.422783234810436
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 59,
+          "auroc_dna_label": 0.6818181818181818,
+          "rho_heldout_rna": 0.32107915907373663
+        },
+        {
+          "pathway": "STK11",
+          "frac": 0.5,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 59,
+          "auroc_dna_label": 0.7133838383838385,
+          "rho_heldout_rna": 0.38680296902084543
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.6508838383838383,
+          "rho_heldout_rna": 0.28420640917374107
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.7342171717171717,
+          "rho_heldout_rna": 0.45905506911418287
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.5946969696969697,
+          "rho_heldout_rna": 0.22316902973465488
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.6527777777777777,
+          "rho_heldout_rna": 0.4037068314147295
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.6679292929292929,
+          "rho_heldout_rna": 0.3711400506689186
+        },
+        {
+          "pathway": "STK11",
+          "frac": 1.0,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.7260101010101011,
+          "rho_heldout_rna": 0.4749348859949331
+        }
+      ]
+    },
+    "NRF2": {
+      "n_patients": 150,
+      "n_dna_labelled": 150,
+      "n_pos": 32,
+      "dna": {
+        "auroc_dna_label": 0.4998675847457627,
+        "rho_heldout_rna_program": 0.0599416673384974,
+        "vus_auc_vs_wt": 0.4844246662428481,
+        "cox": {
+          "hr_per_sd": 1.0012867455063046,
+          "lo": 0.7159250048563511,
+          "hi": 1.4003912978675352,
+          "p": 0.9940055513941582
+        }
+      },
+      "func": {
+        "auroc_dna_label": 0.535884533898305,
+        "rho_heldout_rna_program": 0.1215389853700043,
+        "vus_auc_vs_wt": 0.5646853146853147,
+        "cox": {
+          "hr_per_sd": 1.0436603464780603,
+          "lo": 0.7505850848797331,
+          "hi": 1.4511704812056485,
+          "p": 0.7994260527598498
+        }
+      },
+      "diff_auroc_ci": [
+        -0.08656678969178971,
+        0.15090894043887132,
+        0.2725
+      ],
+      "diff_rho_rna_ci": [
+        -0.09121928694237397,
+        0.21245786522805152,
+        0.2135
+      ],
+      "learning_curve": [
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.5614406779661018,
+          "rho_heldout_rna": 0.1037752789012845
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.5442266949152542,
+          "rho_heldout_rna": 0.03654384639317303
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.4316737288135593,
+          "rho_heldout_rna": -0.12181696964309525
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.4563029661016949,
+          "rho_heldout_rna": -0.1074234410418241
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 30,
+          "auroc_dna_label": 0.5950741525423728,
+          "rho_heldout_rna": 0.0835823814391751
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.25,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 30,
+          "auroc_dna_label": 0.5429025423728814,
+          "rho_heldout_rna": -0.01599893328592382
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 60,
+          "auroc_dna_label": 0.5865995762711865,
+          "rho_heldout_rna": 0.08645539801768967
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 60,
+          "auroc_dna_label": 0.6152012711864406,
+          "rho_heldout_rna": 0.19534912662785017
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 60,
+          "auroc_dna_label": 0.5058262711864407,
+          "rho_heldout_rna": 0.022015200675585583
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 60,
+          "auroc_dna_label": 0.5238347457627119,
+          "rho_heldout_rna": -0.0339766211831637
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 60,
+          "auroc_dna_label": 0.5127118644067796,
+          "rho_heldout_rna": -0.005242899684430419
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 0.5,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 60,
+          "auroc_dna_label": 0.5227754237288135,
+          "rho_heldout_rna": -0.010942708564825104
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 0.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.5190677966101696,
+          "rho_heldout_rna": 0.07212587226098938
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 0.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.581302966101695,
+          "rho_heldout_rna": 0.1527623449931108
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 1.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.5254237288135593,
+          "rho_heldout_rna": 0.09448775501133384
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 1.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.5601165254237288,
+          "rho_heldout_rna": 0.15848348815502913
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 2.0,
+          "arm": "dna",
+          "n_train": 120,
+          "auroc_dna_label": 0.4557733050847458,
+          "rho_heldout_rna": 0.014224632205875817
+        },
+        {
+          "pathway": "NRF2",
+          "frac": 1.0,
+          "seed": 2.0,
+          "arm": "func",
+          "n_train": 120,
+          "auroc_dna_label": 0.4602754237288136,
+          "rho_heldout_rna": 0.021983199253300147
+        }
+      ]
+    }
+  }
+}

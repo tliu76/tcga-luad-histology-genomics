@@ -1,0 +1,8 @@
+{
+  "epochs": 15,
+  "seed": 7,
+  "schemes": "random,site",
+  "attention_scheme": "random",
+  "tasks": "all",
+  "n_bags": 281
+}

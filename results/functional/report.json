@@ -1,0 +1,413 @@
+{
+  "STK11": {
+    "n_patients": 150,
+    "n_dna_labelled": 144,
+    "n_pos": 12,
+    "dna": {
+      "auroc_dna_label": 0.6458333333333333,
+      "rho_heldout_rna_program": 0.305195064985384,
+      "rho_lkb1_protein": 0.13327548442049172,
+      "rho_lkb1_protein_in_WT": 0.08846443834861176,
+      "vus_auc_vs_wt": 0.5795454545454546,
+      "cox": {
+        "hr_per_sd": 1.2909323722180777,
+        "lo": 0.9124247023088025,
+        "hi": 1.8264590879923135,
+        "p": 0.14921228502692865
+      }
+    },
+    "func": {
+      "auroc_dna_label": 0.7174873737373737,
+      "rho_heldout_rna_program": 0.4712920681147575,
+      "rho_lkb1_protein": 0.07892397111291335,
+      "rho_lkb1_protein_in_WT": 0.053348778000574304,
+      "vus_auc_vs_wt": 0.63510101010101,
+      "cox": {
+        "hr_per_sd": 1.0958236703002242,
+        "lo": 0.7909209385231166,
+        "hi": 1.518267449882612,
+        "p": 0.5822897617964464
+      }
+    },
+    "diff_auroc_ci": [
+      -0.09469894843962011,
+      0.25003051757812494,
+      0.1985
+    ],
+    "diff_rho_rna_ci": [
+      0.022940146437908093,
+      0.30315748055864794,
+      0.0135
+    ],
+    "diff_rho_protein_ci": [
+      -0.08353643853085323,
+      0.1925019980264421,
+      0.214
+    ],
+    "learning_curve": [
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.5025252525252525,
+        "rho_heldout_rna": 0.013079692430774701
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.49368686868686873,
+        "rho_heldout_rna": 0.28449442197430996
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.533459595959596,
+        "rho_heldout_rna": 0.1328467931908085
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.5953282828282829,
+        "rho_heldout_rna": 0.2600133339259523
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.7601010101010102,
+        "rho_heldout_rna": 0.11007244766434066
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.25,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.7424242424242424,
+        "rho_heldout_rna": 0.2009813769500867
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 59,
+        "auroc_dna_label": 0.6786616161616161,
+        "rho_heldout_rna": 0.21425841148495486
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 59,
+        "auroc_dna_label": 0.7272727272727273,
+        "rho_heldout_rna": 0.44487132761456066
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 59,
+        "auroc_dna_label": 0.6212121212121212,
+        "rho_heldout_rna": 0.24681808080359127
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 59,
+        "auroc_dna_label": 0.6363636363636364,
+        "rho_heldout_rna": 0.422783234810436
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 59,
+        "auroc_dna_label": 0.6818181818181818,
+        "rho_heldout_rna": 0.32107915907373663
+      },
+      {
+        "pathway": "STK11",
+        "frac": 0.5,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 59,
+        "auroc_dna_label": 0.7133838383838385,
+        "rho_heldout_rna": 0.38680296902084543
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.6508838383838383,
+        "rho_heldout_rna": 0.28420640917374107
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.7342171717171717,
+        "rho_heldout_rna": 0.45905506911418287
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.5946969696969697,
+        "rho_heldout_rna": 0.22316902973465488
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.6527777777777777,
+        "rho_heldout_rna": 0.4037068314147295
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.6679292929292929,
+        "rho_heldout_rna": 0.3711400506689186
+      },
+      {
+        "pathway": "STK11",
+        "frac": 1.0,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.7260101010101011,
+        "rho_heldout_rna": 0.4749348859949331
+      }
+    ]
+  },
+  "NRF2": {
+    "n_patients": 150,
+    "n_dna_labelled": 150,
+    "n_pos": 32,
+    "dna": {
+      "auroc_dna_label": 0.4998675847457627,
+      "rho_heldout_rna_program": 0.0599416673384974,
+      "vus_auc_vs_wt": 0.4844246662428481,
+      "cox": {
+        "hr_per_sd": 1.0012867455063046,
+        "lo": 0.7159250048563511,
+        "hi": 1.4003912978675352,
+        "p": 0.9940055513941582
+      }
+    },
+    "func": {
+      "auroc_dna_label": 0.535884533898305,
+      "rho_heldout_rna_program": 0.1215389853700043,
+      "vus_auc_vs_wt": 0.5646853146853147,
+      "cox": {
+        "hr_per_sd": 1.0436603464780603,
+        "lo": 0.7505850848797331,
+        "hi": 1.4511704812056485,
+        "p": 0.7994260527598498
+      }
+    },
+    "diff_auroc_ci": [
+      -0.08656678969178971,
+      0.15090894043887132,
+      0.2725
+    ],
+    "diff_rho_rna_ci": [
+      -0.09121928694237397,
+      0.21245786522805152,
+      0.2135
+    ],
+    "learning_curve": [
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.5614406779661018,
+        "rho_heldout_rna": 0.1037752789012845
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.5442266949152542,
+        "rho_heldout_rna": 0.03654384639317303
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.4316737288135593,
+        "rho_heldout_rna": -0.12181696964309525
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.4563029661016949,
+        "rho_heldout_rna": -0.1074234410418241
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 30,
+        "auroc_dna_label": 0.5950741525423728,
+        "rho_heldout_rna": 0.0835823814391751
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.25,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 30,
+        "auroc_dna_label": 0.5429025423728814,
+        "rho_heldout_rna": -0.01599893328592382
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 60,
+        "auroc_dna_label": 0.5865995762711865,
+        "rho_heldout_rna": 0.08645539801768967
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 60,
+        "auroc_dna_label": 0.6152012711864406,
+        "rho_heldout_rna": 0.19534912662785017
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 60,
+        "auroc_dna_label": 0.5058262711864407,
+        "rho_heldout_rna": 0.022015200675585583
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 60,
+        "auroc_dna_label": 0.5238347457627119,
+        "rho_heldout_rna": -0.0339766211831637
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 60,
+        "auroc_dna_label": 0.5127118644067796,
+        "rho_heldout_rna": -0.005242899684430419
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 0.5,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 60,
+        "auroc_dna_label": 0.5227754237288135,
+        "rho_heldout_rna": -0.010942708564825104
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 0.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.5190677966101696,
+        "rho_heldout_rna": 0.07212587226098938
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 0.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.581302966101695,
+        "rho_heldout_rna": 0.1527623449931108
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 1.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.5254237288135593,
+        "rho_heldout_rna": 0.09448775501133384
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 1.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.5601165254237288,
+        "rho_heldout_rna": 0.15848348815502913
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 2.0,
+        "arm": "dna",
+        "n_train": 120,
+        "auroc_dna_label": 0.4557733050847458,
+        "rho_heldout_rna": 0.014224632205875817
+      },
+      {
+        "pathway": "NRF2",
+        "frac": 1.0,
+        "seed": 2.0,
+        "arm": "func",
+        "n_train": 120,
+        "auroc_dna_label": 0.4602754237288136,
+        "rho_heldout_rna": 0.021983199253300147
+      }
+    ]
+  }
+}

@@ -98,32 +98,42 @@ def run(pathway: str, lab: pd.DataFrame, z: pd.DataFrame, bags_all: dict, args) 
     strat = d[dna_col].fillna(2).astype(int)  # stratify on WT / altered / VUS-like
     bags = {p: bags_all[p] for p in d.index}
     out = []
+    fractions = [float(f) for f in args.fractions.split(",")]
     for seed in range(args.seeds):
         folds = StratifiedKFold(5, shuffle=True, random_state=100 + seed).split(d, strat)
         for k, (tr, te) in enumerate(folds):
-            tr_ids, te_ids = d.index[tr], d.index[te]
-            if pathway == "STK11":
-                lab_tr = d.loc[tr_ids, dna_col].dropna()
-                teacher, top = stk11_teacher(z, lab_tr.index, lab_tr.values.astype(int))
-            else:
-                teacher, top = d["NRF2_score"], []
-            # DNA arm: labelled training patients only
-            dna_tr = d.loc[tr_ids, dna_col].dropna()
-            m_dna = train([bags[p] for p in dna_tr.index], dna_tr.values.astype(float), "bce", args.epochs, seed * 10 + k)
-            # FUNC arm: every training patient with RNA (VUS-like included)
-            m_fun = train([bags[p] for p in tr_ids], teacher.loc[tr_ids].values.astype(float), "mse", args.epochs, seed * 10 + k)
+            te_ids = d.index[te]
             te_bags = [bags[p] for p in te_ids]
-            out.append(pd.DataFrame({
-                "patient": te_ids, "seed": seed, "fold": k,
-                "score_dna": raw_scores(m_dna, te_bags),
-                "score_func": [m_fun(b)[0].item() for b in te_bags],
-                "teacher_heldout": teacher.loc[te_ids].values,  # computed from training-fold signature
-            }))
-            print(f"{pathway} seed {seed} fold {k} done  (teacher genes: {top[:5]})", flush=True)
+            for frac in fractions:
+                # label-efficiency: both arms see the same (class-stratified) subset of training patients
+                tr_ids = d.index[tr]
+                if frac < 1:
+                    rng = np.random.default_rng(1000 * seed + k)
+                    tr_ids = pd.Index([p for _, g in strat.loc[tr_ids].groupby(strat.loc[tr_ids])
+                                       for p in rng.choice(g.index, max(2, int(round(len(g) * frac))), replace=False)])
+                if pathway == "STK11":
+                    lab_tr = d.loc[tr_ids, dna_col].dropna()
+                    teacher, top = stk11_teacher(z, lab_tr.index, lab_tr.values.astype(int))
+                else:
+                    teacher, top = d["NRF2_score"], []
+                # DNA arm: labelled training patients only
+                dna_tr = d.loc[tr_ids, dna_col].dropna()
+                m_dna = train([bags[p] for p in dna_tr.index], dna_tr.values.astype(float), "bce", args.epochs, seed * 10 + k)
+                # FUNC arm: every training patient with RNA (VUS-like included)
+                m_fun = train([bags[p] for p in tr_ids], teacher.loc[tr_ids].values.astype(float), "mse", args.epochs, seed * 10 + k)
+                out.append(pd.DataFrame({
+                    "patient": te_ids, "seed": seed, "fold": k, "frac": frac, "n_train": len(tr_ids),
+                    "score_dna": raw_scores(m_dna, te_bags),
+                    "score_func": [m_fun(b)[0].item() for b in te_bags],
+                    "teacher_heldout": teacher.loc[te_ids].values,  # from the training-subset signature
+                }))
+                print(f"{pathway} seed {seed} fold {k} frac {frac} (n_train={len(tr_ids)}) done  {top[:4]}", flush=True)
     res = pd.concat(out)
+    res.to_csv(RES / f"oof_all_{pathway}.csv", index=False)
     # ensemble over seeds: average ranks so the two arms are on comparable scales
     for c in ["score_dna", "score_func"]:
-        res[c] = res.groupby("seed")[c].rank(pct=True)
+        res[c] = res.groupby(["seed", "frac"])[c].rank(pct=True)
+    res = res[res.frac == max(fractions)]
     agg = res.groupby("patient")[["score_dna", "score_func", "teacher_heldout"]].mean()
     agg = agg.join(d[[dna_col, f"{'STK11' if pathway == 'STK11' else 'KEAP1'}_class", "RPPA_LKB1", "NRF2_score",
                       "OS_MONTHS", "OS_STATUS", "AJCC_PATHOLOGIC_TUMOR_STAGE", "AGE"]])
@@ -191,11 +201,28 @@ def evaluate(pathway: str, agg: pd.DataFrame) -> dict:
     return rep
 
 
+def learning_curve(pathway: str) -> list:
+    """Per (frac, seed): AUROC vs DNA label and rho vs held-out RNA program, for both arms."""
+    dna_col = "STK11" if pathway == "STK11" else "NRF2_pathway"
+    res = pd.read_csv(RES / f"oof_all_{pathway}.csv")
+    lab = pd.read_csv("data/processed/labels_luad.csv").set_index("patient")[dna_col]
+    res["y"] = res.patient.map(lab)
+    rows = []
+    for (frac, seed), g in res.groupby(["frac", "seed"]):
+        gl = g.dropna(subset=["y"])
+        for arm in ["dna", "func"]:
+            rows.append({"pathway": pathway, "frac": frac, "seed": seed, "arm": arm, "n_train": int(g.n_train.mean()),
+                         "auroc_dna_label": roc_auc_score(gl.y, gl[f"score_{arm}"]),
+                         "rho_heldout_rna": spearmanr(g[f"score_{arm}"], g.teacher_heldout).statistic})
+    return rows
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=15)
     ap.add_argument("--seeds", type=int, default=3)
     ap.add_argument("--pathways", default="STK11,NRF2")
+    ap.add_argument("--fractions", default="0.25,0.5,1.0", help="training-set fractions for the label-efficiency curve")
     args = ap.parse_args()
     RES.mkdir(parents=True, exist_ok=True)
     torch.set_num_threads(8)
@@ -208,6 +235,7 @@ def main():
     for pw in args.pathways.split(","):
         agg = run(pw, lab, z, bags_all, args)
         report[pw] = evaluate(pw, agg)
+        report[pw]["learning_curve"] = learning_curve(pw)
         print(json.dumps(report[pw], indent=1, default=float), flush=True)
     (RES / "report.json").write_text(json.dumps(report, indent=2, default=float))
 

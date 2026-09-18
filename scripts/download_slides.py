@@ -45,6 +45,7 @@ def main() -> None:
     ap.add_argument("--manifest", type=Path, default=Path("data/gdc_slides.csv"))
     ap.add_argument("--out", type=Path, default=Path("data/raw/slides"))
     ap.add_argument("--max-lusc", type=int, default=200)
+    ap.add_argument("--max-luad", type=int, default=0, help="0 = all LUAD patients")
     ap.add_argument("--workers", type=int, default=8)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
@@ -52,6 +53,8 @@ def main() -> None:
     m = pd.read_csv(args.manifest)
     labelled = {tag: set(pd.read_csv(f"data/processed/labels_{tag}.csv").patient) for tag in ["luad", "lusc"]}
     luad = m[(m.project == "TCGA-LUAD") & m.patient.isin(labelled["luad"])].sort_values("size_gb")
+    if args.max_luad:
+        luad = luad.head(args.max_luad)
     lusc = m[(m.project == "TCGA-LUSC") & m.patient.isin(labelled["lusc"])].sort_values("size_gb").head(args.max_lusc)
     # interleave so LUSC controls arrive alongside LUAD, but LUAD dominates the queue
     queue = pd.concat([luad, lusc]).sort_values("size_gb")

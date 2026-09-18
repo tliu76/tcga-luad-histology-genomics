@@ -1,0 +1,20 @@
+{
+ "pooled_tp53_auroc": 0.6628378378378378,
+ "subtype_prob_only_auroc": 0.6498310810810811,
+ "true_subtype_only_auroc": 0.632347972972973,
+ "tp53_rate_luad": 0.5229681978798587,
+ "tp53_rate_lusc": 0.8347107438016529,
+ "keap1_smarca4_wt_high_vs_low": {
+  "table": [
+   [
+    17,
+    51
+   ],
+   [
+    8,
+    57
+   ]
+  ],
+  "fisher_p": 0.048558230749065304
+ }
+}

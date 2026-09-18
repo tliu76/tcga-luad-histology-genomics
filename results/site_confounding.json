@@ -1,0 +1,119 @@
+{
+  "site_id": {
+    "n_patients": 228,
+    "n_sites": 10,
+    "accuracy": 0.8464912280701754,
+    "majority_baseline": 0.2894736842105263,
+    "balanced_accuracy": 0.8211959257217878,
+    "balanced_chance": 0.1
+  },
+  "site_id_luad": {
+    "n_patients": 123,
+    "n_sites": 4,
+    "balanced_accuracy": 0.9924242424242424,
+    "balanced_chance": 0.25
+  },
+  "genotype_by_site": [
+    {
+      "gene": "EGFR",
+      "n": 519,
+      "n_pos": 51,
+      "chi2_p": 0.0101,
+      "site_only_auroc": 0.6059,
+      "prev_min": 0.0,
+      "prev_max": 0.3333
+    },
+    {
+      "gene": "KRAS",
+      "n": 519,
+      "n_pos": 148,
+      "chi2_p": 0.3719,
+      "site_only_auroc": 0.4773,
+      "prev_min": 0.0,
+      "prev_max": 0.4737
+    },
+    {
+      "gene": "TP53",
+      "n": 519,
+      "n_pos": 268,
+      "chi2_p": 0.4181,
+      "site_only_auroc": 0.5107,
+      "prev_min": 0.2222,
+      "prev_max": 0.6667
+    },
+    {
+      "gene": "STK11",
+      "n": 499,
+      "n_pos": 51,
+      "chi2_p": 0.0022,
+      "site_only_auroc": 0.6385,
+      "prev_min": 0.0,
+      "prev_max": 0.3636
+    },
+    {
+      "gene": "NRF2_pathway",
+      "n": 519,
+      "n_pos": 114,
+      "chi2_p": 0.0674,
+      "site_only_auroc": 0.5383,
+      "prev_min": 0.0833,
+      "prev_max": 0.4483
+    }
+  ],
+  "cv_drop": [
+    {
+      "task": "LUAD_EGFR",
+      "random": 0.609,
+      "site": 0.766,
+      "drop": -0.157
+    },
+    {
+      "task": "LUAD_KRAS",
+      "random": 0.574,
+      "site": 0.443,
+      "drop": 0.131
+    },
+    {
+      "task": "LUAD_NRF2_pathway",
+      "random": 0.447,
+      "site": 0.43,
+      "drop": 0.017
+    },
+    {
+      "task": "LUAD_STK11",
+      "random": 0.653,
+      "site": 0.649,
+      "drop": 0.004
+    },
+    {
+      "task": "LUAD_TP53",
+      "random": 0.69,
+      "site": 0.667,
+      "drop": 0.023
+    },
+    {
+      "task": "LUSC_TP53",
+      "random": 0.449,
+      "site": 0.431,
+      "drop": 0.018
+    },
+    {
+      "task": "NSCLC_NRF2_pathway",
+      "random": 0.581,
+      "site": 0.575,
+      "drop": 0.006
+    },
+    {
+      "task": "NSCLC_TP53",
+      "random": 0.663,
+      "site": 0.658,
+      "drop": 0.005
+    },
+    {
+      "task": "NSCLC_subtype_LUSC",
+      "random": 0.974,
+      "site": 0.749,
+      "drop": 0.226
+    }
+  ]
+}
