@@ -47,7 +47,7 @@ So DNA-based labels discard or mislabel 22 STK11 and 73 KEAP1 functionally alter
 function-supervised H&E model can use. Whether morphology tracks function better than genotype
 is what the slide-level experiment decides.
 
-## Results (local run: LUAD n = 153, LUSC n = 128; smallest slides first)
+## Results (local: LUAD n = 153, LUSC n = 128; smallest slides first)
 
 | Question | Result | Figure |
 |---|---|---|
@@ -59,13 +59,13 @@ is what the slide-level experiment decides.
 | NRF2 pathway | No image signal for either arm at this n. | – |
 | STK11-WT, H&E-high tumours | KEAP1/SMARCA4-altered 25% vs 12% (Fisher p = 0.049), consistent with paper Fig. 5f. | `fig_attention_LUAD_STK11.png` |
 
-**Not significant at this sample size:**
+**  Not significant at this sample size:**
 
 * LKB1 protein (RPPA) and overall survival as judges of the H&E models
 * Leiden-cluster mutation enrichment after FDR correction
 
 
-## Paper reproductions
+## Background from the paper
 
 1. **Inference (Paladin, Table 1).** Oncogenic `EGFR`, `KRAS`, `TP53`, `STK11`, `KEAP1` and NRF2-pathway
    alteration within LUAD, with gated ABMIL and a mean-pool logistic-regression baseline.
@@ -127,7 +127,7 @@ python scripts/build_genomic_labels.py && python scripts/query_gdc_metadata.py
 python scripts/teacher_feasibility.py       # reproduces the table above, no slides needed
 ```
 
-**4. Submit the full pipeline.** Extraction watches for new slides, so steps 1 and 2 overlap.
+**4. Submit the full pipeline.**
 
 ```bash
 DL=$(sbatch --parsable slurm/01_download.sbatch)
