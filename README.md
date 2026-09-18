@@ -116,27 +116,22 @@ conda create -n mosaic python=3.11 -y && conda activate mosaic
 pip install -r requirements.txt
 ```
 
-**2. Set your Slurm account** (find it with `myaccount`), and check the paths in `slurm/env.sh`.
 
-```bash
-sed -i 's/CHANGE_ME/<your_account>/' slurm/*.sbatch
-```
-
-**3. Cache the Phikon weights** on the login node, since compute nodes may lack internet.
+**2. Cache the Phikon weights** on the login node, since compute nodes may lack internet.
 
 ```bash
 source slurm/env.sh
 python -c "from transformers import ViTModel; ViTModel.from_pretrained('owkin/phikon')"
 ```
 
-**4. Quick test (optional), before the full run:**
+**3. Quick test (optional), before the full run:**
 
 ```bash
 python scripts/build_genomic_labels.py && python scripts/query_gdc_metadata.py
 python scripts/teacher_feasibility.py       # reproduces the table above, no slides needed
 ```
 
-**5. Submit the full pipeline.** Extraction watches for new slides, so steps 1 and 2 overlap.
+**4. Submit the full pipeline.** Extraction watches for new slides, so steps 1 and 2 overlap.
 
 ```bash
 DL=$(sbatch --parsable slurm/01_download.sbatch)
