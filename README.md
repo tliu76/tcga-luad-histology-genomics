@@ -6,7 +6,7 @@ A public-data study built on Boehm, Darmofal, Pasha *et al.*,
 It (1) reproduces the paper's key analyses at small scale and (2) tests a proposed change to how
 the genomic-inference models are supervised.
 
-> Exploratory research demo on public data. 
+> research proposal on TCGA dataset
 
 ## The proposal: supervise morphology with pathway function, not DNA genotype
 
