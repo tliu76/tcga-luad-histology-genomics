@@ -32,7 +32,7 @@ with identical patients, folds and seeds. They are judged on data that neither m
 * stage/age-adjusted overall survival
 * VUS scoring
 
-### Already verified: omics-only feasibility (`scripts/teacher_feasibility.py`, n = 510 LUAD)
+### Verified: omics-only feasibility (`scripts/teacher_feasibility.py`, n = 510 LUAD)
 
 | | STK11 / LKB1 | KEAP1 / NRF2 |
 |---|---|---|
