@@ -98,7 +98,7 @@ is what the slide-level experiment decides.
 * `NRF2_pathway`: any KEAP1 alteration, NFE2L2 Neh2 hotspots or amplification, CUL3 truncation/deep deletion
   (Sanchez-Vega *et al.*, Cell 2018)
 
-## Running on CARC
+### Running
 
 Everything large lives on `/scratch1/$USER/mosaic`. Total: about 720 GB of slides and about 6 GB of features.
 
