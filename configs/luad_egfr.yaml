@@ -4,7 +4,7 @@ data_type: Slide Image
 sample_type: Primary Tumor
 target:
   name: EGFR_mutation
-  definition: "Nonsynonymous somatic EGFR mutation from a harmonized public MAF file."
+  definition: "Nonsynonymous somatic EGFR mutation."
 development_cohort:
   max_cases: 120
   random_seed: 76
