@@ -8,7 +8,9 @@ data/*.tiff
 data/*.h5
 data/*.pt
 artifacts/
-reports/
+reports/*
+!reports/figures/
+!reports/*.html
 
 # Python and notebooks
 __pycache__/
@@ -24,3 +26,9 @@ __pycache__/
 # Secrets and access tokens
 .env
 *.pem
+
+# Local environment and logs
+.conda/
+logs/
+results/attention/
+results/pred_*.csv

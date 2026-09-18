@@ -1,0 +1,65 @@
+{
+  "STK11": {
+    "n": 510,
+    "oof_auroc_vs_dna": 0.8824458098651647,
+    "top_up_genes": [
+      "INHA",
+      "ODC1",
+      "PDE4D",
+      "COL25A1",
+      "CPS1",
+      "SLC16A14",
+      "SLC7A2",
+      "DUSP4",
+      "SIK1",
+      "IRS2"
+    ],
+    "median_score": {
+      "WT": -0.5555997787874343,
+      "VUS-like": 1.8042923161670803,
+      "oncogenic": 1.5448254555129164
+    },
+    "n_class": {
+      "WT": 434,
+      "VUS-like": 22,
+      "oncogenic": 54
+    },
+    "p_vus_gt_wt": 1.61168504888319e-10,
+    "lkb1_protein": {
+      "rho_score": -0.1148746433573084,
+      "rho_dna_label": -0.11149363931970353,
+      "n_wt_program_high": 46,
+      "median_wt_high": 0.18680000000000002,
+      "median_wt_low": 0.3122,
+      "p_wt_high_lt_low": 0.015788806584585598
+    }
+  },
+  "KEAP1": {
+    "n": 510,
+    "oof_auroc_vs_dna": 0.9295803066989508,
+    "top_up_genes": [
+      "TRIM16L",
+      "PGD",
+      "CBR1",
+      "TALDO1",
+      "SRXN1",
+      "TRIM16",
+      "G6PD",
+      "UGDH",
+      "PIR",
+      "AKR1C1"
+    ],
+    "median_score": {
+      "WT": -0.5867879691372097,
+      "VUS-like": 1.645507295584093,
+      "oncogenic": 1.7186353316416185
+    },
+    "n_class": {
+      "WT": 413,
+      "VUS-like": 73,
+      "oncogenic": 24
+    },
+    "p_vus_gt_wt": 3.2313324470540835e-30,
+    "rho_with_literature_nrf2_score": 0.6720639629751839
+  }
+}

@@ -1,62 +1,176 @@
-# TCGA-LUAD Histology-Genomics Demo
+# Mini-Mosaic: H&E morphology ↔ pathway function in TCGA lung adenocarcinoma
 
-A compact, reproducible computational-pathology project that tests whether features learned from H&E whole-slide images improve patient-level prediction of genomic phenotypes in lung adenocarcinoma (TCGA-LUAD).
+A public-data study built on Boehm, Darmofal, Pasha *et al.*,
+[*Integrated histopathologic modeling of detailed tumor subtypes and actionable biomarkers*](https://doi.org/10.1101/2025.08.14.670351)
+(bioRxiv 2025). It uses TCGA diagnostic H&E slides and cBioPortal genomics in place of MSK-IMPACT.
+It (1) reproduces the paper's key analyses at small scale and (2) tests a proposed change to how
+the genomic-inference models are supervised.
 
-## Why this project
+> Exploratory research demo on public data. Not a diagnostic model.
 
-The first milestone is deliberately small: predict `EGFR` mutation status from diagnostic H&E slides. The project then provides a clean path to test `TP53`, focal copy-number events, molecular subtypes, and clinical outcomes. It is designed as a portfolio project, not a clinical diagnostic model.
+## The proposal: supervise morphology with pathway function, not DNA genotype
 
-## Research question
+Paladin learns **H&E → DNA alteration**. That label is noisy in ways the paper itself documents:
+epigenetic silencing and missed variants are labelled wild-type, and functional VUS are
+ambiguous. Phenocopies are found *after* training (paper Fig. 5).
 
-> Can pretrained histology representations from H&E whole-slide images predict genomic phenotypes in TCGA-LUAD, and do they add value beyond routine clinical variables?
+Here a **transcriptomic teacher** converts genotype into a continuous **pathway-activity score**:
 
-## Project structure
+* **LKB1-loss program**: top-50 up and top-50 down genes, truncating vs WT, derived *inside each training fold*
+* **NRF2 target-gene program**: NQO1, AKR1C1-3, GCLM, TXNRD1, SRXN1, …; fixed a priori
 
-```text
-configs/       Analysis settings and cohort definition
-data/          Local data only; never commit slides or patient-level data
-docs/          Study notes and a data dictionary
-scripts/       Command-line entry points
-src/           Reusable Python code
-tests/         Small unit tests
-```
+An **H&E student** (gated ABMIL) then regresses that score. Training is multimodal; inference
+needs only H&E. The student can learn from VUS carriers, and phenocopies are labelled correctly
+by construction.
 
-## Milestone 1: a one-week proof of concept
+**Head-to-head** (`scripts/train_functional.py`): DNA-supervised vs function-supervised ABMIL,
+with identical patients, folds and seeds. They are judged on data that neither model trained on:
 
-1. Query the GDC for public TCGA-LUAD diagnostic H&E slide metadata and clinical/mutation labels.
-2. Download a small development cohort (for example, 80-150 patients) of slides.
-3. Extract tissue patches and obtain pretrained pathology embeddings.
-4. Fit a patient-level multiple-instance-learning (MIL) model for `EGFR` mutation status.
-5. Report patient-level AUROC, PR-AUC, calibration, and representative high-attention patches.
+* DNA AUROC
+* held-out RNA program
+* **LKB1 protein (RPPA)**
+* stage/age-adjusted overall survival
+* VUS scoring
 
-Do not interpret an association as causal. Use patient-level splits, never tile-level splits, to prevent information leakage.
+### Already verified: omics-only feasibility (`scripts/teacher_feasibility.py`, n = 510 LUAD)
 
-## Quick start
+| | STK11 / LKB1 | KEAP1 / NRF2 |
+|---|---|---|
+| In-fold program recovers DNA status (OOF AUROC) | **0.88** | **0.93** |
+| Top program genes (unsupervised recovery of known biology) | INHA, ODC1, PDE4D, CPS1, DUSP4 | TRIM16L, PGD, CBR1, TALDO1, SRXN1, G6PD, AKR1C1 |
+| Median program score: WT / missense-only / truncating | −0.56 / **1.80** / 1.54 | −0.59 / **1.65** / 1.72 |
+| Missense-only > WT (Mann-Whitney) | p = 1.6e-10 (n = 22) | p = 3e-30 (n = 73) |
+| WT but program-high → lower LKB1 protein | n = 46, p = 0.016 | – |
+
+So DNA-based labels discard or mislabel 22 STK11 and 73 KEAP1 functionally altered tumours
+(the KEAP1 cases are 3× the truncating positives), plus WT phenocopies. These are the cases a
+function-supervised H&E model can use. Whether morphology tracks function better than genotype
+is what the slide-level experiment decides.
+
+## Paper reproductions
+
+1. **Inference (Paladin, Table 1).** Oncogenic `EGFR`, `KRAS`, `TP53`, `STK11`, `KEAP1` and NRF2-pathway
+   alteration within LUAD, with gated ABMIL and a mean-pool logistic-regression baseline.
+2. **Granular vs coarse (Ext. Data Fig. 8).** TP53 inference in pooled LUAD+LUSC vs within each subtype.
+   The pooled model's score is compared with a LUAD-vs-LUSC subtype model to show it learns subtype.
+3. **VUS and phenocopies (Fig. 5).** Missense STK11/KEAP1 are held out and scored. STK11-WT, H&E-high
+   cases are checked against STK11 mRNA and LKB1 protein, and against overall survival.
+4. **Unsupervised structure (Fig. 4a).** Leiden clusters of slide embeddings with Fisher/BH mutation enrichment.
+5. **Attention maps (Fig. 4f).**
+
+## Pipeline
+
+| Step | Script | Notes |
+|---|---|---|
+| Labels + RNA | `scripts/build_genomic_labels.py` | cBioPortal PanCancer Atlas: mutations, GISTIC, RNA-seq, RPPA, clinical |
+| Slide manifest | `scripts/query_gdc_metadata.py` | Open-access diagnostic FFPE slides, one per patient (no GDC token needed) |
+| Download | `scripts/download_slides.py` | GDC open-data mirror on AWS (`s3://tcga-2-open`), resumable |
+| Tiles + features | `scripts/extract_features.py` | 224 px @ 0.5 µm/px = **112 µm tiles** (as in the paper); Otsu tissue mask; [Phikon](https://huggingface.co/owkin/phikon) ViT-B |
+| Teacher check | `scripts/teacher_feasibility.py` | Omics only, seconds |
+| Mini-Paladin | `scripts/train_mil.py` | 10 tasks; 5-fold patient-level CV, **random and site-grouped** |
+| Proposal | `scripts/train_functional.py` | DNA vs function supervision, 3 seeds |
+| Analyses | `scripts/analyze.py`, `scripts/plot_attention.py` | Figures → `reports/figures/`, numbers → `results/summary.json` |
+
+### Label definitions (OncoKB-free proxy)
+
+* `EGFR`: L858R, exon 19 in-frame deletions, exon 20 insertions, G719X, L861Q, S768I, T790M
+* `KRAS`: codons 12/13/59/61/117/146
+* `TP53`: any non-synonymous mutation or deep deletion
+* `STK11`, `KEAP1`: truncating/splice or deep deletion = 1; **missense-only = uncertain (held out)**
+* `NRF2_pathway`: any KEAP1 alteration, NFE2L2 Neh2 hotspots or amplification, CUL3 truncation/deep deletion
+  (Sanchez-Vega *et al.*, Cell 2018)
+
+## Running on USC CARC
+
+Everything large lives on `/scratch1/$USER/mosaic`. Total: about 720 GB of slides and about 6 GB of features.
+
+**1. One-time setup (login node).**
 
 ```bash
-conda env create -f environment.yml
-conda activate tcga-pathology
-python scripts/query_gdc_metadata.py --config configs/luad_egfr.yaml
-pytest -q
+cd /project/<your_pi>_<id>/$USER            # or /scratch1/$USER; avoid /home1 (100 GB quota)
+git clone <this repo> && cd tcga-luad-histology-genomics
+module load conda
+conda create -n mosaic python=3.11 -y && conda activate mosaic
+pip install -r requirements.txt
 ```
 
-The metadata query is safe to run without downloading any slides. Review the output manifest before requesting slide files from the GDC portal/API.
+**2. Set your Slurm account** (find it with `myaccount`), and check the paths in `slurm/env.sh`.
 
-## Data sources
+```bash
+sed -i 's/CHANGE_ME/<your_account>/' slurm/*.sbatch
+```
 
-- H&E diagnostic whole-slide images, clinical data, and mutation calls: [NCI Genomic Data Commons](https://portal.gdc.cancer.gov/)
-- Workflow sanity-check dataset: [CAMELYON16](https://camelyon16.grand-challenge.org/Download/)
+**3. Cache the Phikon weights** on the login node, since compute nodes may lack internet.
 
-## Portfolio deliverables
+```bash
+source slurm/env.sh
+python -c "from transformers import ViTModel; ViTModel.from_pretrained('owkin/phikon')"
+```
 
-- A public README with question, cohort definition, and limitations.
-- Versioned configuration files and an environment specification.
-- A cohort manifest with GDC IDs, but no raw image files.
-- A concise results notebook or report after analysis.
+**4. Quick test (optional), before the full run:**
 
-## Next extensions
+```bash
+python scripts/build_genomic_labels.py && python scripts/query_gdc_metadata.py
+python scripts/teacher_feasibility.py       # reproduces the table above, no slides needed
+```
 
-- Predict `TP53` mutation or a copy-number phenotype.
-- Integrate mutation/CNV features with H&E embeddings in a late-fusion model.
-- Replace slide-level prediction with an interpretable question: which histologic patterns are associated with EGFR-mutant tumors?
-- Evaluate external generalization only with a clearly independent cohort.
+**5. Submit the full pipeline.** Extraction watches for new slides, so steps 1 and 2 overlap.
+
+```bash
+DL=$(sbatch --parsable slurm/01_download.sbatch)
+FX=$(sbatch --parsable --dependency=after:$DL slurm/02_extract.sbatch)
+sbatch --dependency=afterok:$FX slurm/03_train_analyze.sbatch
+squeue -u $USER; tail -f logs/mosaic-dl-*.out
+```
+
+**Knobs** (environment variables at submit time):
+
+* `MAX_LUSC` (default: all)
+* `MAX_TILES` (default 4000 per slide)
+* `EPOCHS` (default 20)
+* `SEEDS` (default 3)
+
+For a faster first pass, use `MAX_LUSC=200` and `MAX_TILES=1000`.
+
+The downloader is resumable. If a job times out, resubmit it and completed slides are skipped.
+For very large transfers, CARC recommends the data-transfer nodes (`hpc-transfer1.usc.edu`).
+You can also run `scripts/download_slides.py --out $SLIDES` there directly.
+
+**Outputs:**
+
+* `results/metrics.csv`, `results/summary.json`, `results/functional/report.json`
+* figures in `reports/figures/`
+
+## Run locally (small scale)
+
+```bash
+pip install -r requirements.txt
+python scripts/build_genomic_labels.py && python scripts/query_gdc_metadata.py
+python scripts/download_slides.py --max-lusc 50 &   # Ctrl-C any time; smallest slides come first
+python scripts/extract_features.py --watch --max-tiles 1000
+python scripts/train_mil.py && python scripts/train_functional.py && python scripts/analyze.py
+```
+
+## Design choices
+
+* **Patient-level splits only.** Tiles from one patient never cross folds.
+* **Site-grouped CV.** TCGA tissue-source sites carry stain and scanner signatures that correlate with
+  genotype prevalence. Reporting both CV schemes shows how much performance survives on unseen hospitals.
+* **Missense variants are not called negative.** Held out, then scored.
+* **No leakage from the teacher.** The LKB1-loss program is re-derived inside each training fold.
+  Test-fold RNA is used only for evaluation.
+* **Orthogonal judges.** Protein and survival are never used for training.
+
+## Limitations
+
+* About 470 LUAD patients, vs about 880 LUAD primaries (71k patients overall) in the paper. CIs are wide.
+* One slide per patient (the smallest file, to limit download). This biases toward smaller sections.
+* Phikon was self-supervised on TCGA tiles (no labels), so the embedding has seen this domain.
+* Genomics are TCGA WES PanCancer calls with a rule-based oncogenicity proxy, not MSK-IMPACT + OncoKB.
+* RPPA LKB1 is a noisy antibody readout (ρ ≈ −0.11 even vs DNA status). It is a weak but independent judge.
+* No external cohort. A natural next step is CPTAC-LUAD, which has public slides, proteomics and genomics.
+
+## Data policy
+
+No slides, patient-level features or tokens are committed. All inputs are open-access GDC slides
+and public cBioPortal data.

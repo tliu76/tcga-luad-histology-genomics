@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Create a public metadata manifest for TCGA-LUAD diagnostic slide images."""
+"""Create a manifest of open-access TCGA-LUAD diagnostic (FFPE) H&E slides.
+
+One slide per patient: the smallest diagnostic slide, to keep download time down.
+"""
 
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -14,66 +16,62 @@ import yaml
 GDC_FILES_ENDPOINT = "https://api.gdc.cancer.gov/files"
 
 
-def build_filters(config: dict) -> dict:
-    """Restrict the query to public TCGA-LUAD primary-tumor slide images."""
+def build_filters(config: dict, project: str | None = None) -> dict:
+    """Restrict the query to open-access TCGA diagnostic slide images."""
+    project = project or config["project"]
     return {
         "op": "and",
         "content": [
-            {"op": "in", "content": {"field": "cases.project.project_id", "value": [config["project"]]}},
+            {"op": "in", "content": {"field": "cases.project.project_id", "value": [project]}},
             {"op": "in", "content": {"field": "data_type", "value": [config["data_type"]]}},
-            {"op": "in", "content": {"field": "cases.samples.sample_type", "value": [config["sample_type"]]}},
+            {"op": "in", "content": {"field": "experimental_strategy", "value": ["Diagnostic Slide"]}},
+            {"op": "in", "content": {"field": "access", "value": ["open"]}},
         ],
     }
 
 
-def query_gdc(config: dict) -> pd.DataFrame:
-    fields = [
-        "file_id",
-        "file_name",
-        "file_size",
-        "data_format",
-        "cases.case_id",
-        "cases.submitter_id",
-        "cases.samples.sample_type",
-    ]
-    params = {
-        "filters": json.dumps(build_filters(config)),
-        "fields": ",".join(fields),
-        "format": "JSON",
-        "size": "10000",
-    }
-    response = requests.get(GDC_FILES_ENDPOINT, params=params, timeout=60)
+def query_gdc(config: dict, project: str) -> pd.DataFrame:
+    response = requests.post(
+        GDC_FILES_ENDPOINT,
+        json={
+            "filters": build_filters(config, project),
+            "fields": "file_id,file_name,file_size,cases.submitter_id",
+            "size": "5000",
+            "format": "JSON",
+        },
+        timeout=120,
+    )
     response.raise_for_status()
     hits = response.json()["data"]["hits"]
-
-    rows = []
-    for hit in hits:
-        case = hit.get("cases", [{}])[0]
-        rows.append(
+    df = pd.DataFrame(
+        [
             {
-                "file_id": hit["file_id"],
-                "file_name": hit["file_name"],
-                "file_size_gb": round(hit.get("file_size", 0) / 1_000_000_000, 3),
-                "data_format": hit.get("data_format"),
-                "case_id": case.get("case_id"),
-                "submitter_id": case.get("submitter_id"),
+                "file_id": h["file_id"],
+                "file_name": h["file_name"],
+                "size_gb": h["file_size"] / 1e9,
+                "patient": h["cases"][0]["submitter_id"],
             }
-        )
-    return pd.DataFrame(rows).sort_values(["submitter_id", "file_name"])
+            for h in hits
+        ]
+    )
+    # one slide per patient; take the smallest file to save download time
+    return df.sort_values("size_gb").drop_duplicates("patient", keep="first").reset_index(drop=True)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("data/tcga_luad_slide_manifest.tsv"))
+    parser.add_argument("--config", type=Path, default=Path("configs/luad_egfr.yaml"))
+    parser.add_argument("--output", type=Path, default=Path("data/gdc_slides.csv"))
     args = parser.parse_args()
 
     config = yaml.safe_load(args.config.read_text())
-    manifest = query_gdc(config)
+    frames = []
+    for project in ["TCGA-LUAD", "TCGA-LUSC"]:
+        df = query_gdc(config, project).assign(project=project)
+        print(f"{project}: {len(df)} patients, median {df.size_gb.median():.2f} GB, total {df.size_gb.sum():.0f} GB")
+        frames.append(df)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    manifest.to_csv(args.output, sep="\t", index=False)
-    print(f"Wrote {len(manifest)} slide records to {args.output}")
-    print(f"Total listed size: {manifest['file_size_gb'].sum():.1f} GB")
+    pd.concat(frames).to_csv(args.output, index=False)
 
 
 if __name__ == "__main__":
