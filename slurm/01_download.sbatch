@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --job-name=mosaic-dl
-#SBATCH --account=CHANGE_ME
 #SBATCH --partition=main
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=16G
