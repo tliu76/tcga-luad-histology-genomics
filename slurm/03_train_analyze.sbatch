@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --job-name=mosaic-mil
-#SBATCH --account=CHANGE_ME
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16
